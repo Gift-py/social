@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="block">
+        <div class="block">
+            <h2 class="title is-2">Login</p>
+        </div>
+        <div class="block">
+            <form class="form-horizontal" method="post">
+            
+                {% csrf_token %}                
+                
+                <!-- Text input-->
+                <div class="field">
+                  <label class="label" for="username">Username</label>
+                  <div class="control">
+                    <input id="username" name="username" type="text" class="input " required="">
+                    
+                  </div>
+                </div>
+                
+                <!-- Password input-->
+                <div class="field">
+                  <label class="label" for="password1">Password</label>
+                  <div class="control">
+                    <input id="password" name="password" type="password" class="input " required="">
+                    
+                  </div>
+                </div>
+
+                <button class="button is-success is-fullwidth is-medium mt-5" type="submit">
+                    Login
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
+    

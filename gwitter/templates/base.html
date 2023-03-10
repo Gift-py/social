@@ -10,17 +10,28 @@
     <title>Dwitter</title>
 </head>
 <body> 
-    <a href="{% url 'gwitter:dashboard' %}">
-        <section class="hero is-small is-success mb-4">
+    
+    <section class="hero is-small is-success mb-4">
+        {% if activate %}
+            <a href="{% url 'gwitter:dashboard' %}">
+                <div class="hero-body">
+                    <h1 class="title is-1">Gwitter</h1>
+                    <p class="subtitle is-4">
+                        Shitty Ass Social Network App
+                    </p>
+                </div>
+            </a>    
+        {% else %}
             <div class="hero-body">
                 <h1 class="title is-1">Gwitter</h1>
                 <p class="subtitle is-4">
                     Shitty Ass Social Network App
                 </p>
             </div>
-        </section>
-    </a>
-
+        {% endif %}
+        
+    </section>
+        
     <div class="container">
         <div class="columns">
 
@@ -30,5 +41,17 @@
 
         </div>
     </div>
+
+    <br>
+    {% if activate %}
+    <div class="column is-centered">
+        <a href="{% url 'gwitter:logout' %}">
+            <div class="column is-one-third">
+                <p>Logout</p>
+            </div>
+        </a>
+    </div>    
+    {% endif %}
+    
 </body>
 </html>
