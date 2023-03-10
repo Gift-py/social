@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="column">
+        {% for gweet in gweets %}
+            <div class="box">
+                {{ gweet.body }}
+                <span class="is-small has-text-grey-light">
+                    <br>
+                    <i>({{ gweet.created_at }} by {{ gweet.user.username }})</i>
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="column is-one-third">
+        <div class="block">
+            <b>Hello {{ user }}</b>
+        </div>
+        <div class="block">
+            <a href="{% url 'gwitter:profile-list' %} ">
+                <button class="button is-dark is-outlined is-fullwidth">
+                    All Profiles
+                </button>
+            </a>
+        </div>
+        <div class="block">
+            <a href="{% url 'gwitter:profile' request.user.username %} ">
+                <button class="button is-success is-light is-outlined is-fullwidth">
+                    My Profile
+                </button>
+            </a>
+        </div>
+
+        <div class="block">
+            <div class="block">
+                <h2 class="title is-2">Add a Gweet</p>
+            </div>
+            <div class="block">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="button is-success is-fullwidth is-medium mt-5" type="submit">
+                        Gweet
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}  

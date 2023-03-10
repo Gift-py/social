@@ -22,7 +22,16 @@
             {% endif %}
         </div>
     </form>
-    
+    <div class="content">
+        {% for gweet in profile.user.gweets.all %}
+            <div class="box">
+                {{ gweet.body }}
+                <span class="is-small has-text-grey-light">
+                    ({{ gweet.created_at }})
+                </span>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 <div class="column is-one-third">

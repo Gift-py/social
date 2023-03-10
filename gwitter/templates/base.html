@@ -9,15 +9,17 @@
           href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <title>Dwitter</title>
 </head>
-<body>
-    <section class="hero is-small is-success mb-4">
-        <div class="hero-body">
-            <h1 class="title is-1">Dwitter</h1>
-            <p class="subtitle is-4">
-                Your tiny social network built with Django
-            </p>
-        </div>
-    </section>
+<body> 
+    <a href="{% url 'gwitter:dashboard' %}">
+        <section class="hero is-small is-success mb-4">
+            <div class="hero-body">
+                <h1 class="title is-1">Gwitter</h1>
+                <p class="subtitle is-4">
+                    Shitty Ass Social Network App
+                </p>
+            </div>
+        </section>
+    </a>
 
     <div class="container">
         <div class="columns">
