@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, User, Gweet
+from .models import Comments, User, Gweet
 from django.contrib.auth.forms import UserCreationForm
 
 class GweetForm(forms.ModelForm):
@@ -23,3 +23,10 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+class CommentForm(forms.ModelForm):
+    body = forms.CharField(required=True)
+
+    class Meta:
+        model = Comments
+        fields = ['body']

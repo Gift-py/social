@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Profile, User, Gweet
+from .models import User, Gweet
 from .forms import GweetForm, UserForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate
@@ -15,8 +15,6 @@ def create_account(request):
                 user = form.save()
                 auth_login(request, user)
                 
-                profile = Profile(user=user)
-                profile.save()
                 return redirect('gwitter:dashboard')
             else:
                 print(form.errors)
@@ -49,7 +47,7 @@ def dashboard(request):
         if request.user.is_authenticated:
             if form.is_valid():
                 gweet = form.save(commit=False)
-                gweet.user = request.user
+                gweet.user = User.objects.get(username=request.user.username)
                 gweet.save()
                 return redirect('gwitter:dashboard')
     
@@ -58,20 +56,16 @@ def dashboard(request):
 
 def profile_list(request):
     if request.user.is_authenticated:
-        profiles = Profile.objects.exclude(user=request.user)
+        profiles = User.objects.exclude(username=request.user.username)
         return render(request, 'gwitter/profile_list.html', {'profiles':profiles, 'activate':True})
 
 
 def profile(request, username):
+    follow_option = False
+    if request.user.is_authenticated:        
+        profile = User.objects.get(username=username)
 
-    if request.user.is_authenticated:
-        if not hasattr(request.user, 'profile'):
-            missing_profile = Profile(user=request.user)
-            missing_profile.save()
-        
-        profile = Profile.objects.get(user=User.objects.get(username=username))
-
-        current_user_profile = request.user.profile
+        current_user_profile = User.objects.get(username=request.user.username)
         data = request.POST
         action = data.get('follow')
 
@@ -80,11 +74,12 @@ def profile(request, username):
                 current_user_profile.follows.add(profile)
             elif action == 'unfollow':
                 current_user_profile.follows.remove(profile)
+            follow_option = True
         
             current_user_profile.save()
 
-        user_follows = profile in request.user.profile.follows.all()
+        user_follows = profile in User.objects.get(username=request.user.username).follows.all()
     
         return render(request, 'gwitter/profile.html', 
                 {'profile':profile, 'followers':len(profile.followed_by.all()), 
-                'follows':len(profile.follows.all()), 'user_follows':user_follows, 'activate':True})
+                'follows':len(profile.follows.all()), 'user_follows':user_follows, 'activate':True, 'follow_option':follow_option})
